@@ -23,12 +23,16 @@ export default function Nav() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             {/* homepage */}
             <li className="nav-item">
-              <NavLink className={"nav-link"}>Home</NavLink>
+              <NavLink className={"nav-link"} to={"/"}>
+                Home
+              </NavLink>
             </li>
+
+            {/* contacts */}
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                I nostri Piatti
-              </a>
+              <NavLink className={"nav-link"} to={"/contacts"}>
+                Contatti
+              </NavLink>
             </li>
             <li className="nav-item dropdown">
               <a
