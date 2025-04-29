@@ -30,8 +30,8 @@ export default function Nav() {
 
             {/* contacts */}
             <li className="nav-item">
-              <NavLink className={"nav-link"} to={"/contacts"}>
-                Contatti
+              <NavLink className={"nav-link"} to={"/piatti"}>
+                I nostri piatti
               </NavLink>
             </li>
             <li className="nav-item dropdown">
@@ -42,34 +42,29 @@ export default function Nav() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
+                Altro
               </a>
               <ul className="dropdown-menu">
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
+                  <NavLink className={"nav-link"} to={"/contacts"}>
+                    Contatti
+                  </NavLink>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
+                  <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <hr classNameName="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
+                  <NavLink className={"nav-link"} to={"/about"}>
+                    Chi siamo
+                  </NavLink>
                 </li>
               </ul>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a className="nav-link disabled" aria-disabled="true">
                 Disabled
               </a>
-            </li>
+            </li> */}
           </ul>
           <form className="d-flex" role="search">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
