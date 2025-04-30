@@ -4,7 +4,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min"; // Import Bootstrap JS
 import DefaultLayout from "./layouts/DefaultLayout";
 import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
-import DishesPage from "./pages/DishesPage";
+import DishesPage from "./pages/Dish/DishesPage";
+import DishDetailPage from "./pages/Dish/DishDetailPage";
 
 function App() {
   return (
@@ -12,7 +13,10 @@ function App() {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="/piatti" element={<DishesPage />} />
+          <Route path="piatti">
+            <Route index element={<DishesPage />} />
+            <Route path=":id" element={<DishDetailPage />} />
+          </Route>
           <Route path="/contacts" element={<ContactPage />} />
         </Route>
       </Routes>
