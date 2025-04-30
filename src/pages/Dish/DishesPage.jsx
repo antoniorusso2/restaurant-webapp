@@ -13,9 +13,10 @@ export default function DishesPage() {
   const getDishes = async () => {
     try {
       const response = await axios.get(defaultApiUrl);
-      const results = response.data.results.data;
+      const results = response.data.results;
 
       setDishes(results);
+      // console.log(results);
     } catch (error) {
       console.error(error);
     }
@@ -33,16 +34,16 @@ export default function DishesPage() {
             <div className="card h-100">
               <div className="card-header h-75">
                 <img
-                  src={defaultImgUrl + dish.image}
+                  src={dish.image ? defaultImgUrl + dish.image : placeholder}
                   onError={(e) => (e.target.src = placeholder)}
-                  className="card-img flex-shrink-0 w-100 h-100 object-fit-cover"
+                  className="card-img w-100 h-100 object-fit-cover"
                   alt={dish.name}
                 />
               </div>
               <div className="card-body">
                 {/* link to detail page */}
                 <Link
-                  className="card-title text-truncate h2 link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                  className="card-title d-block text-truncate h4 link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
                   to={`/piatti/${dish.id}`}
                 >
                   {dish.name}

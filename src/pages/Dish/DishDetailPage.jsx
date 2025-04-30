@@ -1,19 +1,25 @@
 import axios from "axios";
 import placeholder from "../../assets/placeholder.png";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+const defaultApiUrl = import.meta.env.VITE_API_URL + "dishes";
+const defaultImgUrl = import.meta.env.VITE_API_IMG_URL;
 
 export default function DishDetailPage() {
   const id = useParams().id;
+  // const navigate = useNavigate();
 
   const [dish, setDish] = useState([]);
 
   const getDish = async () => {
     try {
-      const response = await axios.get(import.meta.env.VITE_API_URL + "dishes/" + id);
+      const response = await axios.get(defaultApiUrl + `/${id}`);
 
       const results = response.data.results;
+
       setDish(results);
+
+      // console.log(dish);
     } catch (error) {
       console.error(error);
     }
@@ -25,23 +31,39 @@ export default function DishDetailPage() {
 
   return (
     <div className="container">
-      <div className="row">
+      {/* title and price */}
+      <div className="row align-items-center row-gap-3">
         <div className="col-12">
           <h1>{dish.name}</h1>
+          <span className="badge bg-gradient text-bg-success">&euro; {dish.price} </span>
         </div>
-        <div className="col-12">
+
+        {/* image */}
+        <div className="col-12 col-lg-6 flex-shrink-0">
           <img
-            src={import.meta.env.VITE_API_IMG_URL + dish.image}
+            src={dish.image ? defaultImgUrl + dish.image : placeholder}
             alt={dish.name}
             onError={(e) => (e.target.src = placeholder)}
-            className="img-fluid"
-            style={{ maxWidth: "100%", height: "200px" }}
+            className="img-fluid rounded-3"
+            style={{ maxWidth: "100%" }}
           />
         </div>
 
-        <div className="col-12 my-5">
-          <p>{dish.description}</p>
-          <p>&euro; {dish.price}</p>
+        {/* description and ingredients */}
+        <div className="col-12 col-lg-6 d-flex flex-column gap-3">
+          {dish.ingredients && (
+            <div className="ingredients border border-light-subtle rounded-3 p-3">
+              <h3 className="fw-bold">Ingredienti</h3>
+              <ul className="list-group list-group-flush text-decoration-none list-unstyled">
+                {dish.ingredients.map((ingredient) => (
+                  <li key={ingredient.id}>- {ingredient.name}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className="description border border-light-subtle rounded-3 p-3">
+            <p className="lead ">{dish.description}</p>
+          </div>
         </div>
       </div>
     </div>
