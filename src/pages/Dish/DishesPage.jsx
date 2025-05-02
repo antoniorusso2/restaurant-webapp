@@ -10,13 +10,15 @@ const defaultImgUrl = import.meta.env.VITE_API_IMG_URL;
 export default function DishesPage() {
   const [dishes, setDishes] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   const getDishes = async () => {
     try {
       const response = await axios.get(defaultApiUrl);
       const results = response.data.results;
 
-      setDishes(results);
-      // console.log(results);
+      setCurrentPage(results.current_page);
+      setDishes(results.data);
     } catch (error) {
       console.error(error);
     }
