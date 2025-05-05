@@ -2,13 +2,16 @@ import axios from "axios";
 import placeholder from "../../assets/placeholder.png";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 // .env api base url for dishes index
-const defaultApiUrl = import.meta.env.VITE_API_URL + "dishes/";
+const defaultApiUrl = import.meta.env.VITE_API_URL + "dishes";
 const defaultImgUrl = import.meta.env.VITE_API_IMG_URL;
 
 export default function DishesPage() {
+  const [searchParams, setSearchParams] = useSearchParams(); //import parametri dalla query string
   const [dishes, setDishes] = useState([]);
+
+  const search = searchParams.get("name");
 
   const [pagination, setPagination] = useState({
     perPage: 4,
@@ -19,7 +22,9 @@ export default function DishesPage() {
 
   const getDishes = async (page = 1) => {
     try {
-      const response = await axios.get(defaultApiUrl + `?limit=${pagination.perPage}` + `&page=${page}`);
+      const response = await axios.get(
+        defaultApiUrl + `?limit=${pagination.perPage}` + `&page=${page}` + `&name=${searchParams.get("name") || ""}`
+      );
 
       const results = response.data.results;
 
@@ -38,7 +43,7 @@ export default function DishesPage() {
 
   useEffect(() => {
     getDishes(1);
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="container mt-3">
