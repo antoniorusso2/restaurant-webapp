@@ -4,20 +4,32 @@ import placeholder from "../../assets/placeholder.png";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 // .env api base url for dishes index
-const defaultApiUrl = import.meta.env.VITE_API_URL + "dishes";
+const defaultApiUrl = import.meta.env.VITE_API_URL + "dishes/";
 const defaultImgUrl = import.meta.env.VITE_API_IMG_URL;
 
 export default function DishesPage() {
   const [dishes, setDishes] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    perPage: 4,
+    currentPage: 1,
+    lastPage: 1,
+    total: 0,
+  });
 
-  const getDishes = async () => {
+  const getDishes = async (page = 1) => {
     try {
-      const response = await axios.get(defaultApiUrl);
+      const response = await axios.get(defaultApiUrl + `?limit=${pagination.perPage}` + `&page=${page}`);
+
       const results = response.data.results;
 
-      setCurrentPage(results.current_page);
+      setPagination({
+        perPage: results.per_page,
+        currentPage: results.current_page,
+        lastPage: results.last_page,
+        total: results.total,
+      });
+
       setDishes(results.data);
     } catch (error) {
       console.error(error);
@@ -25,7 +37,7 @@ export default function DishesPage() {
   };
 
   useEffect(() => {
-    getDishes();
+    getDishes(1);
   }, []);
 
   return (
@@ -56,6 +68,24 @@ export default function DishesPage() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="row my-4">
+        <div className="col-12 pages">
+          <nav aria-label="Page navigation example ">
+            <ul className="pagination justify-content-center gap-2">
+              {Array.from({ length: pagination.lastPage }, (_, index) => (
+                <li key={index} className="page-item">
+                  <button
+                    className={`page-link ${pagination.currentPage === index + 1 ? "active" : ""}`}
+                    onClick={() => getDishes(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   );
