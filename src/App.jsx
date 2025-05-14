@@ -6,20 +6,25 @@ import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
 import DishesPage from "./pages/Dish/DishesPage";
 import DishDetailPage from "./pages/Dish/DishDetailPage";
+import { useState } from "react";
+import LoaderContext from "./context/LoaderContext";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<DefaultLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="piatti">
-            <Route index element={<DishesPage />} />
-            <Route path=":id" element={<DishDetailPage />} />
+      <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
+        <Routes>
+          <Route element={<DefaultLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="piatti">
+              <Route index element={<DishesPage />} />
+              <Route path=":id" element={<DishDetailPage />} />
+            </Route>
+            <Route path="/contacts" element={<ContactPage />} />
           </Route>
-          <Route path="/contacts" element={<ContactPage />} />
-        </Route>
-      </Routes>
+        </Routes>
+      </LoaderContext.Provider>
     </BrowserRouter>
   );
 }

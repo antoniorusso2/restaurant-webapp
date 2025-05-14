@@ -6,12 +6,12 @@ export default function Searchbar() {
 
   const [search, setSearch] = useState(searchParams.get("name") || "");
 
-  const handleSearch = (e) => {
+  function handleSearch(e) {
     e.preventDefault();
     const newValue = search;
     // search value
     newValue ? setSearchParams({ name: newValue }) : setSearchParams({}); //elimina parametro name dalla query string in caso non sia scritto niente nella barra di ricerca
-  };
+  }
 
   function handleInput(e) {
     const newValue = e.target.value;
@@ -23,13 +23,14 @@ export default function Searchbar() {
       <input
         className="form-control me-2"
         type="search"
+        id="search"
         placeholder="Search"
         aria-label="Search"
         onChange={handleInput}
         value={search}
       />
       <button className="btn btn-outline-success" type="submit">
-        Search
+        Cerca
       </button>
     </form>
   );

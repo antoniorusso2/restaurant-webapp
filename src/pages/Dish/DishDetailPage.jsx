@@ -7,7 +7,7 @@ const defaultImgUrl = import.meta.env.VITE_API_IMG_URL;
 
 export default function DishDetailPage() {
   const id = useParams().id;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [dish, setDish] = useState([]);
 
@@ -31,11 +31,17 @@ export default function DishDetailPage() {
 
   return (
     <div className="container">
+      <div className="cta">
+        {/* back button */}
+        <button className="btn btn-outline-primary me-auto" onClick={() => navigate(-1)} type="button">
+          Indietro
+        </button>
+      </div>
       {/* title and price */}
       <div className="row align-items-center row-gap-3">
         <div className="col-12">
           <h1>{dish.name}</h1>
-          <span className="badge bg-gradient text-bg-success">&euro; {dish.price} </span>
+          <span className="badge bg-gradient text-bg-success fs-5">&euro; {dish.price} </span>
         </div>
 
         {/* image */}
