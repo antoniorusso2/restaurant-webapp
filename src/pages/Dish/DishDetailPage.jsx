@@ -37,6 +37,7 @@ export default function DishDetailPage() {
           Indietro
         </button>
       </div>
+
       {/* title and price */}
       <div className="row align-items-center row-gap-3">
         <div className="col-12">
@@ -56,7 +57,7 @@ export default function DishDetailPage() {
         </div>
 
         {/* description and ingredients */}
-        <div className="col-12 col-lg-6 d-flex flex-column gap-3">
+        <div className="col-12 col-lg-6 d-flex flex-column gap-3 align-self-start ">
           {dish.ingredients && (
             <div className="ingredients border border-light-subtle rounded-3 p-3">
               <h3 className="fw-bold">Ingredienti</h3>

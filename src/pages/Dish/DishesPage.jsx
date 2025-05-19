@@ -9,7 +9,7 @@ const defaultApiUrl = import.meta.env.VITE_API_URL + "dishes";
 
 export default function DishesPage() {
   const { setIsLoading } = useContext(LoaderContext);
-  const [searchParams] = useSearchParams(); //import parametri dalla query string
+  const [searchParams, setSearchParams] = useSearchParams(); //import parametri dalla query string
   const [dishes, setDishes] = useState([]);
 
   const search = searchParams.get("name");
@@ -24,6 +24,12 @@ export default function DishesPage() {
   const getDishes = async (page = 1) => {
     try {
       setIsLoading(true);
+
+      // Update the searchParams
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("page", page);
+      setSearchParams(newParams);
+
       const response = await axios.get(
         defaultApiUrl + `?limit=${pagination.perPage}` + `&page=${page}` + `&name=${search || ""}`
       );
@@ -46,7 +52,8 @@ export default function DishesPage() {
   };
 
   useEffect(() => {
-    getDishes(1);
+    const pageParam = parseInt(searchParams.get("page")) || 1;
+    getDishes(pageParam);
   }, [searchParams]);
 
   return (
