@@ -18,10 +18,16 @@ export default function Searchbar() {
     setSearch(newValue);
   }
 
+  // refetch piatti con il reset del campo ricerca
+  function handleReset() {
+    setSearch("");
+    setSearchParams({}); //elimina parametro name dalla query string in caso non sia scritto niente nella barra di ricerca
+  }
+
   return (
-    <form className="d-flex" role="search" onSubmit={handleSearch}>
+    <form className="d-flex gap-2" role="search" onSubmit={handleSearch}>
       <input
-        className="form-control me-2"
+        className="form-control"
         type="search"
         id="search"
         placeholder="Search"
@@ -31,6 +37,9 @@ export default function Searchbar() {
       />
       <button className="btn btn-outline-success" type="submit">
         Cerca
+      </button>
+      <button type="reset" onClick={() => handleReset()} className="btn btn-outline-danger">
+        Reset
       </button>
     </form>
   );
